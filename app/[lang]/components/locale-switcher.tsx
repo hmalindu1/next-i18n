@@ -8,12 +8,28 @@ import { i18n } from '@/i18n.config'
 export default function LocaleSwitcher() {
   const pathName = usePathname()
 
-  const redirectedPathName = (locale: string) => {
-    if (!pathName) return '/'
-    const segments = pathName.split('/')
-    segments[1] = locale
-    return segments.join('/')
-  }
+/**
+ * Constructs a localized path by injecting the specified locale into
+ * the current pathname. This function is used to create href values
+ * for locale-switching links.
+ * 
+ * @param locale The locale to be injected into the pathname.
+ * @returns The updated pathname with the specified locale.
+ */
+const redirectedPathName = (locale: string) => {
+  // If the current pathname is not available, default to the root path.
+  if (!pathName) return '/'
+
+  // Split the pathname into segments to manipulate individual parts.
+  const segments = pathName.split('/')
+
+  // Replace the second segment (index 1) with the specified locale.
+  // This assumes the first segment of the path is always the locale.
+  segments[1] = locale
+
+  // Reassemble and return the updated pathname.
+  return segments.join('/')
+}
 
   return (
     <ul className='flex gap-x-3'>
